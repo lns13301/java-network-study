@@ -24,7 +24,7 @@ public class TCPClient {
 
     public void disconnectServer() {
         try {
-            if (socket != null && socket.isClosed()) {
+            if (socket != null && !socket.isClosed()) {
                 socket.close();
             }
         } catch (IOException e) {
