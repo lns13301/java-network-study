@@ -14,7 +14,7 @@ public class TCPServer {
     public TCPServer() throws IOException {
         serverSocket = new ServerSocket();
 
-        localHostAddress = InetAddress.getLocalHost().getHostAddress();
+        localHostAddress = "127.0.0.1"; //InetAddress.getLocalHost().getHostAddress();
         serverSocket.bind(new InetSocketAddress(localHostAddress, SERVER_PORT));
 
         System.out.println("[server] binding! \naddress:" + localHostAddress + ", port:" + SERVER_PORT);
