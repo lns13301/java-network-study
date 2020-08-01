@@ -51,7 +51,7 @@ public class TCPServer extends Thread{
                 else {
                     System.out.println("[채팅 서버] 클라이언트 : " + message);
 
-                    if (message == "가위" || message == "바위" || message == "보") {
+                    if (message.equals("가위") || message.equals("바위") || message.equals("보")) {
                         showGameResult();
                     }
                 }
@@ -70,7 +70,7 @@ public class TCPServer extends Thread{
 
             System.out.println("[server] connected! \nconnected socket address:" + remoteHostName
                     + ", port:" + remoteHostPort);
-            System.out.println("서버를 종료하려면 'exit'를 입력하세요.\n");
+            System.out.println("서버를 종료하려면 '종료' 혹은 'exit'를 입력하세요.\n");
             System.out.println("[가위 바위 보] 게임");
             System.out.println("채팅으로 '가위' '바위' '보' 중 하나를 입력하세요.\n");
 
@@ -114,6 +114,6 @@ public class TCPServer extends Thread{
     public enum RockScissorsPaperResult {
         Win(),
         Lose(),
-        Draw();
+        Draw()
     }
 }

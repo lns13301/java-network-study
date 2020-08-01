@@ -36,7 +36,7 @@ public class TCPClient extends Thread {
 
             while(true) {
                 message = tmpBuf.readLine();
-                if (message.equals("exit")) {
+                if (message.equals("exit") || message.equals("종료")) {
                     break;
                 }
 
