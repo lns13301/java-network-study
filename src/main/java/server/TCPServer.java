@@ -1,6 +1,8 @@
 package server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -24,14 +26,36 @@ public class TCPServer extends Thread{
             e.printStackTrace();
         }
 
-        waitClientConnection();
+        Socket clientSocket = waitClientConnection();
+
+        BufferedReader tmpBuf = null;
+
+        try {
+            tmpBuf = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String message;
 
         while (true) {
-            closeServer();
+            try {
+                message = tmpBuf.readLine();
+
+                if (message == null) {
+                    System.out.println("상대방과 연결이 끊어졌습니다.");
+                    break;
+                }
+                else {
+                    System.out.println("[채팅 서버] 클라이언트 : " + message);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void waitClientConnection() {
+    public Socket waitClientConnection() {
         try {
             Socket socket = serverSocket.accept();
             InetSocketAddress remoteSocketAddress = (InetSocketAddress)socket.getRemoteSocketAddress();
@@ -40,9 +64,15 @@ public class TCPServer extends Thread{
 
             System.out.println("[server] connected! \nconnected socket address:" + remoteHostName
                     + ", port:" + remoteHostPort);
+            System.out.println("서버를 종료하려면 'exit'를 입력하세요.\n");
+            System.out.println("[가위 바위 보] 게임");
+            System.out.println("채팅으로 '가위' '바위' '보' 중 하나를 입력하세요.\n");
+
+            return socket;
         }
         catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
