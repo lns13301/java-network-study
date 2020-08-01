@@ -7,6 +7,8 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class TCPServer extends Thread{
     private static final int SERVER_PORT = 12345;
@@ -48,6 +50,10 @@ public class TCPServer extends Thread{
                 }
                 else {
                     System.out.println("[채팅 서버] 클라이언트 : " + message);
+
+                    if (message == "가위" || message == "바위" || message == "보") {
+                        showGameResult();
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -76,6 +82,24 @@ public class TCPServer extends Thread{
         }
     }
 
+    public RockScissorsPaperResult showGameResult() {
+        int value = ThreadLocalRandom.current().nextInt(3);
+
+        switch (value) {
+            case 0:
+                System.out.println("이겼습니다!");
+                return RockScissorsPaperResult.Win;
+            case 1:
+                System.out.println("졌습니다!");
+                return RockScissorsPaperResult.Lose;
+            case 2:
+                System.out.println("비겼습니다!");
+                return RockScissorsPaperResult.Draw;
+            default:
+                return null;
+        }
+    }
+
     public void closeServer() {
         try {
             if (serverSocket != null && !serverSocket.isClosed()) {
@@ -85,5 +109,11 @@ public class TCPServer extends Thread{
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public enum RockScissorsPaperResult {
+        Win(),
+        Lose(),
+        Draw();
     }
 }
