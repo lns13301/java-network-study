@@ -116,10 +116,13 @@ public class TCPClient extends Thread {
             System.out.println("[클라이언트] AI : 바위");
             System.out.println("[클라이언트] 이겼습니다!");
         }
-        if (value == 32) {
+        if (value == 33) {
             System.out.println("[클라이언트] 클라이언트 : 보");
             System.out.println("[클라이언트] AI : 보");
             System.out.println("[클라이언트] 비겼습니다?");
+        }
+        if (value == 0) {
+            System.out.println();
         }
     }
 

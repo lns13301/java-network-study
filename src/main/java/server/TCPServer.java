@@ -55,9 +55,7 @@ public class TCPServer extends Thread{
                 else {
                     System.out.println("[서버] 클라이언트 : " + message);
 
-                    if (message.equals("가위") || message.equals("바위") || message.equals("보")) {
-                        sendToClientGameResult(showGameResult(message));
-                    }
+                    sendToClientGameResult(showGameResult(message));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -84,6 +82,10 @@ public class TCPServer extends Thread{
     }
 
     public int showGameResult(String message) {
+        if (!(message.equals("가위") || message.equals("바위") || message.equals("보"))) {
+            return -1;
+        }
+
         int value = ThreadLocalRandom.current().nextInt(3);
 
         switch (value) {
@@ -106,38 +108,37 @@ public class TCPServer extends Thread{
 
     public String getAIChoice(int type, String message) {
         if (type == 0) {
-            if (message.equals("가위")) {
-                return "[서버] AI : 바위";
-            }
-            else if (message.equals("바위")){
-                return "[서버] AI : 보";
-            }
-            else {
-                return "[서버] AI : 가위";
+            switch (message) {
+                case "가위":
+                    return "[서버] AI : 바위";
+                case "바위":
+                    return "[서버] AI : 보";
+                case "보":
+                    return "[서버] AI : 가위";
             }
         }
         else if (type == 2) {
-            if (message.equals("가위")) {
-                return "[서버] AI : 가위";
-            }
-            else if (message.equals("바위")){
-                return "[서버] AI : 바위";
-            }
-            else {
-                return "[서버] AI : 보";
+            switch (message) {
+                case "가위":
+                    return "[서버] AI : 가위";
+                case "바위":
+                    return "[서버] AI : 바위";
+                case "보":
+                    return "[서버] AI : 보";
             }
         }
         else {
-            if (message.equals("가위")) {
-                return "[서버] AI : 보";
-            }
-            else if (message.equals("바위")){
-                return "[서버] AI : 가위";
-            }
-            else {
-                return "[서버] AI : 바위";
+            switch (message) {
+                case "가위":
+                    return "[서버] AI : 보";
+                case "바위":
+                    return "[서버] AI : 가위";
+                case "보":
+                    return "[서버] AI : 바위";
             }
         }
+
+        return "";
     }
 
     public void sendToClientGameResult(int result) {
